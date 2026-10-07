@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wayan's Burger — Full Daging, Full Keju</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --peach:#FFD9B8;
+    --peach-deep:#FFC49A;
+    --orange:#F89B5C;
+    --orange-hover:#EE8843;
+    --orange-soft:#FFF1E6;
+    --cream:#FFF9F3;
+    --cream-2:#FDEFE3;
+    --white:#FFFFFF;
+    --text-dark:#2B2320;
+    --text-mid:#6B5E56;
+    --text-soft:#9A8C82;
+    --border:#F0E4D8;
+    --green:#4CCB7A;
+    --green-hover:#3AB568;
+    --shadow:0 10px 30px rgba(248,155,92,.15);
+    --shadow-lg:0 20px 50px rgba(248,155,92,.22);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Montserrat',sans-serif;
+    background:var(--cream);
+    color:var(--text-dark);
+    overflow-x:hidden;
+    line-height:1.6;
+  }
+  h1,h2,h3,.brand-font{font-family:'Fredoka',sans-serif;font-weight:600;}
+
+  /* ============ HEADER ============ */
+  header{
+    position:sticky;top:0;z-index:100;
+    background:rgba(255,249,243,.9);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--border);
+    padding:14px 32px;
+    display:flex;align-items:center;justify-content:space-between;
+    gap:16px;
+  }
+  .logo-wrap{display:flex;align-items:center;gap:14px;}
+  .logo-img{
+    width:52px;height:52px;object-fit:contain;
+    border-radius:50%;background:var(--white);padding:4px;
+    box-shadow:var(--shadow);flex-shrink:0;
+  }
+  .logo-circle{
+    width:52px;height:52px;border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, var(--peach), var(--orange) 70%);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fredoka',sans-serif;font-weight:700;font-size:24px;
+    color:var(--white);box-shadow:var(--shadow);flex-shrink:0;
+  }
+  .logo-text{line-height:1.05;}
+  .logo-text b{font-family:'Fredoka',sans-serif;font-size:17px;color:var(--text-dark);font-weight:600;}
+  .logo-text small{display:block;font-size:10px;color:var(--text-soft);letter-spacing:2.5px;text-transform:uppercase;margin-top:3px;font-weight:600;}
+
+  .header-actions{display:flex;align-items:center;gap:10px;}
+
+  .cart-header-btn{
+    position:relative;
+    width:46px;height:46px;border-radius:50%;
+    background:var(--white);border:1px solid var(--border);
+    cursor:pointer;transition:.3s;
+    display:flex;align-items:center;justify-content:center;
+    font-size:20px;
+    box-shadow:0 4px 12px rgba(248,155,92,.1);
+  }
+  .cart-header-btn:hover{background:var(--orange);border-color:var(--orange);transform:scale(1.05);}
+  .cart-badge{
+    position:absolute;top:-4px;right:-4px;
+    background:var(--orange);color:var(--white);
+    font-family:'Montserrat',sans-serif;font-weight:700;
+    font-size:11px;min-width:20px;height:20px;
+    border-radius:50%;display:flex;align-items:center;justify-content:center;
+    padding:0 5px;border:2px solid var(--cream);
+  }
+
+  .menu-btn{
+    width:46px;height:46px;
+    display:flex;flex-direction:column;
+    align-items:center;justify-content:center;gap:6px;
+    background:var(--white);border:1px solid var(--border);
+    border-radius:50%;cursor:pointer;transition:.3s;
+    box-shadow:0 4px 12px rgba(248,155,92,.1);
+  }
+  .menu-btn:hover{background:var(--orange);border-color:var(--orange);transform:scale(1.05);}
+  .menu-btn span{width:5px;height:5px;border-radius:50%;background:var(--text-dark);display:block;transition:.3s;}
+  .menu-btn:hover span{background:var(--white);}
+
+  /* ============ DRAWER MENU ============ */
+  .drawer{
+    position:fixed;top:0;right:-340px;
+    width:320px;height:100vh;
+    background:var(--white);border-left:1px solid var(--border);
+    z-index:300;padding:80px 32px 40px;
+    transition:right .4s cubic-bezier(.22,.61,.36,1);
+    box-shadow:-20px 0 60px rgba(0,0,0,.08);overflow-y:auto;
+  }
+  .drawer.open{right:0;}
+  .drawer h3{font-family:'Fredoka',sans-serif;font-size:22px;margin-bottom:8px;color:var(--orange);font-weight:600;}
+  .drawer .drawer-sub{font-size:13px;color:var(--text-soft);margin-bottom:28px;}
+  .drawer ul{list-style:none;display:flex;flex-direction:column;gap:6px;}
+  .drawer a{
+    display:flex;align-items:center;gap:12px;
+    padding:14px 18px;border-radius:14px;
+    color:var(--text-dark);text-decoration:none;
+    font-weight:600;font-size:15px;transition:.25s;
+  }
+  .drawer a:hover{background:var(--orange-soft);color:var(--orange);transform:translateX(4px);}
+  .drawer-close{
+    position:absolute;top:22px;right:22px;
+    width:38px;height:38px;border-radius:50%;
+    background:var(--orange-soft);border:none;
+    color:var(--text-dark);font-size:16px;cursor:pointer;
+    transition:.25s;display:flex;align-items:center;justify-content:center;
+  }
+  .drawer-close:hover{background:var(--orange);color:var(--white);}
+
+  /* ============ CART DRAWER ============ */
+  .cart-drawer{
+    position:fixed;top:0;right:-460px;
+    width:440px;max-width:100vw;height:100vh;
+    background:var(--white);
+    z-index:320;
+    transition:right .4s cubic-bezier(.22,.61,.36,1);
+    box-shadow:-20px 0 60px rgba(0,0,0,.15);
+    display:flex;flex-direction:column;
+  }
+  .cart-drawer.open{right:0;}
+  .cart-head{
+    padding:24px 28px;border-bottom:1px solid var(--border);
+    display:flex;justify-content:space-between;align-items:center;
+    background:var(--cream);
+  }
+  .cart-head h3{font-family:'Fredoka',sans-serif;font-size:20px;color:var(--text-dark);}
+  .cart-head p{font-size:12px;color:var(--text-soft);margin-top:3px;}
+  .cart-close{
+    width:38px;height:38px;border-radius:50%;
+    background:var(--white);border:1px solid var(--border);
+    cursor:pointer;font-size:16px;color:var(--text-dark);
+    transition:.25s;display:flex;align-items:center;justify-content:center;
+  }
+  .cart-close:hover{background:var(--orange);color:var(--white);border-color:var(--orange);}
+
+  .cart-body{
+    flex:1;overflow-y:auto;padding:24px 28px;
+    display:flex;flex-direction:column;gap:18px;
+  }
+
+  .cart-empty{
+    text-align:center;padding:60px 20px;
+    display:flex;flex-direction:column;align-items:center;gap:16px;
+  }
+  .cart-empty .emoji{font-size:64px;opacity:.5;}
+  .cart-empty h4{font-family:'Fredoka',sans-serif;font-size:18px;color:var(--text-dark);}
+  .cart-empty p{font-size:14px;color:var(--text-soft);max-width:260px;}
+
+  .cart-item{
+    display:flex;gap:14px;align-items:center;
+    background:var(--cream);
+    border:1px solid var(--border);
+    border-radius:16px;padding:14px 16px;
+  }
+  .cart-item-img{
+    width:60px;height:60px;border-radius:12px;
+    object-fit:cover;flex-shrink:0;
+    background:var(--peach);
+  }
+  .cart-item-info{flex:1;min-width:0;}
+  .cart-item-info h4{font-size:14px;font-weight:700;color:var(--text-dark);margin-bottom:2px;}
+  .cart-item-info .item-price{font-size:13px;color:var(--orange);font-weight:700;}
+  .qty-control{
+    display:flex;align-items:center;gap:8px;
+    background:var(--white);border:1px solid var(--border);
+    border-radius:50px;padding:4px;
+  }
+  .qty-btn{
+    width:28px;height:28px;border-radius:50%;
+    background:var(--orange-soft);border:none;
+    color:var(--orange-hover);font-weight:700;font-size:15px;
+    cursor:pointer;transition:.2s;
+    display:flex;align-items:center;justify-content:center;
+    font-family:inherit;
+  }
+  .qty-btn:hover{background:var(--orange);color:var(--white);}
+  .qty-num{min-width:20px;text-align:center;font-weight:700;font-size:14px;}
+
+  .form-group{display:flex;flex-direction:column;gap:8px;}
+  .form-group label{
+    font-size:13px;font-weight:700;color:var(--text-dark);
+    display:flex;align-items:center;gap:6px;
+  }
+  .form-group label .req{color:var(--orange);}
+  .form-group input,
+  .form-group textarea{
+    font-family:inherit;font-size:14px;
+    padding:13px 16px;
+    background:var(--cream);
+    border:1.5px solid var(--border);
+    border-radius:12px;
+    color:var(--text-dark);
+    transition:.25s;
+    resize:none;
+  }
+  .form-group input:focus,
+  .form-group textarea:focus{
+    outline:none;border-color:var(--orange);
+    background:var(--white);
+    box-shadow:0 0 0 4px rgba(248,155,92,.12);
+  }
+  .form-group textarea{min-height:70px;font-family:inherit;}
+  .form-divider{height:1px;background:var(--border);margin:6px 0;}
+
+  .cart-foot{
+    padding:22px 28px 28px;border-top:1px solid var(--border);
+    background:var(--white);
+  }
+  .total-row{
+    display:flex;justify-content:space-between;align-items:center;
+    margin-bottom:6px;font-size:14px;color:var(--text-mid);
+  }
+  .total-row.final{
+    font-family:'Fredoka',sans-serif;
+    font-size:22px;font-weight:600;
+    color:var(--text-dark);
+    padding-top:12px;margin-top:8px;
+    border-top:1px dashed var(--border);
+  }
+  .total-row.final span:last-child{color:var(--orange);}
+
+  .checkout-btn{
+    width:100%;margin-top:18px;
+    background:var(--green);color:var(--white);
+    border:none;border-radius:50px;
+    padding:16px;font-family:'Montserrat',sans-serif;
+    font-weight:700;font-size:15px;
+    cursor:pointer;transition:.3s;
+    display:flex;align-items:center;justify-content:center;gap:10px;
+    box-shadow:0 10px 30px rgba(76,203,122,.35);
+  }
+  .checkout-btn:hover{background:var(--green-hover);transform:translateY(-2px);box-shadow:0 14px 36px rgba(76,203,122,.45);}
+  .checkout-btn svg{width:20px;height:20px;fill:#fff;}
+
+  .add-cart-btn{
+    background:var(--white);color:var(--text-dark);
+    border:2px solid var(--orange);
+    padding:13px 28px;border-radius:50px;
+    font-weight:700;font-size:15px;text-decoration:none;
+    display:inline-flex;align-items:center;gap:8px;
+    transition:.3s;cursor:pointer;
+  }
+  .add-cart-btn:hover{background:var(--orange);color:var(--white);}
+  .add-cart-btn.added{background:var(--green);border-color:var(--green);color:var(--white);}
+
+  .overlay{
+    position:fixed;inset:0;background:rgba(43,35,32,.35);
+    z-index:250;opacity:0;pointer-events:none;transition:.3s;
+    backdrop-filter:blur(3px);
+  }
+  .overlay.show{opacity:1;pointer-events:auto;}
+  .overlay.cart{z-index:310;}
+
+  /* ============ HERO ============ */
+  .hero{
+    max-width:1240px;margin:0 auto;
+    padding:60px 32px 100px;
+    display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center;
+    position:relative;
+  }
+  /* Gambar versi mobile — default hidden di desktop */
+  .hero-visual-mobile{display:none;position:relative;}
+
+  .hero-text .tagline{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--orange-soft);border:1px solid var(--peach);
+    color:var(--orange-hover);font-weight:700;font-size:12px;
+    letter-spacing:2px;text-transform:uppercase;
+    padding:9px 20px;border-radius:50px;margin-bottom:24px;
+  }
+  .hero-text h1{
+    font-size:56px;line-height:1.08;font-weight:600;
+    letter-spacing:-.5px;margin-bottom:22px;color:var(--text-dark);
+  }
+  .hero-text h1 .highlight{
+    color:var(--orange);
+    background:linear-gradient(180deg, transparent 65%, var(--peach) 65%);
+    padding:0 4px;
+  }
+  .hero-text p.sub{
+    font-size:16px;line-height:1.75;color:var(--text-mid);
+    max-width:520px;margin-bottom:30px;
+  }
+
+  .price-row{display:flex;align-items:center;gap:22px;flex-wrap:wrap;}
+  .price{
+    font-family:'Fredoka',sans-serif;font-weight:600;
+    font-size:54px;color:var(--text-dark);line-height:1;
+  }
+  .price small{font-size:22px;color:var(--orange);vertical-align:super;margin-right:6px;}
+  .price .strike{
+    display:block;font-family:'Montserrat',sans-serif;
+    font-size:14px;font-weight:600;color:var(--text-soft);
+    text-decoration:line-through;margin-top:10px;
+  }
+  .hero-cta{display:flex;gap:14px;margin-top:32px;flex-wrap:wrap;}
+
+  .cta-btn{
+    background:var(--orange);color:var(--white);
+    font-family:'Montserrat',sans-serif;font-weight:700;
+    font-size:15px;letter-spacing:.3px;
+    padding:15px 32px;border:none;border-radius:50px;
+    cursor:pointer;text-decoration:none;
+    display:inline-flex;align-items:center;gap:8px;
+    transition:.3s;box-shadow:var(--shadow);
+  }
+  .cta-btn:hover{background:var(--orange-hover);transform:translateY(-3px);box-shadow:var(--shadow-lg);}
+
+  .hero-visual-desktop{position:relative;}
+  .hero-visual-desktop .glow,
+  .hero-visual-mobile .glow{
+    position:absolute;inset:-30px;
+    background:radial-gradient(circle at center, rgba(255,217,184,.7), transparent 70%);
+    filter:blur(50px);z-index:0;
+    border-radius:50%;
+  }
+  .burger-img{
+    position:relative;z-index:1;width:100%;border-radius:32px;
+    box-shadow:0 30px 60px rgba(43,35,32,.15);
+    display:block;object-fit:cover;aspect-ratio:1/1;
+    border:8px solid var(--white);
+  }
+  .badge-float{
+    position:absolute;z-index:2;background:var(--white);color:var(--text-dark);
+    font-family:'Fredoka',sans-serif;font-weight:600;font-size:14px;
+    padding:12px 20px;border-radius:50px;
+    box-shadow:0 12px 30px rgba(43,35,32,.12);
+    border:2px solid var(--orange-soft);
+  }
+  .badge-1{top:22px;left:-20px;transform:rotate(-6deg);}
+  .badge-2{bottom:28px;right:-20px;transform:rotate(4deg);background:var(--orange);color:var(--white);border-color:var(--orange);}
+
+  /* ============ SECTION UMUM ============ */
+  section{padding:100px 32px;}
+  .container{max-width:1240px;margin:0 auto;}
+  .section-head{text-align:center;margin-bottom:64px;}
+  .section-head .eyebrow{
+    color:var(--orange);font-weight:800;font-size:12px;
+    letter-spacing:3px;text-transform:uppercase;margin-bottom:16px;display:inline-block;
+  }
+  .section-head h2{font-size:44px;font-weight:600;line-height:1.15;color:var(--text-dark);}
+  .section-head h2 .highlight{
+    color:var(--orange);
+    background:linear-gradient(180deg, transparent 65%, var(--peach) 65%);
+    padding:0 6px;
+  }
+  .section-head p{color:var(--text-mid);max-width:600px;margin:18px auto 0;line-height:1.7;font-size:15px;}
+
+  /* ============ KOMPONEN ============ */
+  .components{
+    background:var(--orange-soft);
+    border-top:1px solid var(--border);
+    border-bottom:1px solid var(--border);
+  }
+  .component-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:70px;align-items:center;}
+  .component-visual{position:relative;}
+  .component-visual img{
+    width:100%;border-radius:28px;display:block;
+    box-shadow:0 24px 50px rgba(43,35,32,.12);
+    aspect-ratio:1/1;object-fit:cover;border:8px solid var(--white);
+  }
+  .comp-list{display:flex;flex-direction:column;gap:20px;}
+  .comp-item{
+    display:flex;gap:20px;align-items:flex-start;
+    background:var(--white);border:1px solid var(--border);
+    padding:24px 26px;border-radius:20px;
+    transition:.3s;box-shadow:0 4px 16px rgba(43,35,32,.04);
+  }
+  .comp-item:hover{transform:translateY(-4px);border-color:var(--peach);box-shadow:var(--shadow);}
+  .comp-icon{
+    font-size:28px;line-height:1;flex-shrink:0;
+    width:60px;height:60px;border-radius:18px;
+    background:var(--orange-soft);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .comp-item h3{font-size:19px;margin-bottom:8px;font-weight:600;color:var(--text-dark);}
+  .comp-item p{font-size:14px;color:var(--text-mid);line-height:1.65;}
+
+  /* ============ CARA ORDER ============ */
+  .steps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;}
+  .step-card{
+    background:var(--white);border:1px solid var(--border);
+    border-radius:24px;padding:40px 32px;
+    position:relative;transition:.35s;
+    box-shadow:0 4px 16px rgba(43,35,32,.04);
+  }
+  .step-card:hover{transform:translateY(-8px);border-color:var(--peach);box-shadow:var(--shadow-lg);}
+  .step-num{
+    font-family:'Fredoka',sans-serif;font-weight:600;
+    font-size:56px;line-height:1;color:var(--peach);
+    margin-bottom:20px;display:block;letter-spacing:-2px;
+  }
+  .step-card h3{font-size:20px;margin-bottom:12px;font-weight:600;color:var(--text-dark);}
+  .step-card p{font-size:14px;color:var(--text-mid);line-height:1.75;}
+
+  /* ============ FOOTER ============ */
+  footer{
+    background:var(--cream-2);
+    border-top:1px solid var(--border);
+    padding:80px 32px 32px;
+  }
+  .footer-grid{
+    max-width:1240px;margin:0 auto;
+    display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:56px;
+  }
+  .footer-brand .logo-wrap{margin-bottom:22px;}
+  .footer-brand p{color:var(--text-mid);font-size:14px;line-height:1.75;max-width:340px;}
+  .footer-col h4{font-family:'Fredoka',sans-serif;font-size:16px;margin-bottom:22px;color:var(--text-dark);font-weight:600;}
+  .footer-col ul{list-style:none;display:flex;flex-direction:column;gap:16px;}
+  .footer-col li{font-size:14px;color:var(--text-mid);line-height:1.65;display:flex;gap:12px;align-items:flex-start;}
+  .footer-col li b{color:var(--text-dark);font-weight:600;}
+  .socials{display:flex;gap:12px;margin-top:24px;}
+  .socials a{
+    width:46px;height:46px;border-radius:50%;
+    background:var(--white);border:1px solid var(--border);
+    display:flex;align-items:center;justify-content:center;
+    color:var(--text-dark);text-decoration:none;font-size:18px;transition:.3s;
+  }
+  .socials a:hover{background:var(--orange);border-color:var(--orange);color:var(--white);transform:translateY(-4px);box-shadow:var(--shadow);}
+  .footer-bottom{
+    max-width:1240px;margin:56px auto 0;padding-top:28px;
+    border-top:1px solid var(--border);
+    display:flex;justify-content:space-between;align-items:center;
+    gap:20px;flex-wrap:wrap;font-size:13px;color:var(--text-soft);
+  }
+  .footer-bottom a{color:var(--orange);text-decoration:none;font-weight:600;}
+
+  /* ============ FLOATING CART BTN (Mobile) ============ */
+  .cart-float{
+    display:none;
+    position:fixed;bottom:100px;right:28px;z-index:200;
+    width:62px;height:62px;border-radius:50%;
+    background:var(--orange);
+    align-items:center;justify-content:center;
+    box-shadow:0 12px 30px rgba(248,155,92,.5);
+    cursor:pointer;transition:.3s;border:none;
+    font-size:24px;color:var(--white);
+  }
+  .cart-float:hover{transform:scale(1.1);}
+  .cart-float .cart-badge{
+    position:absolute;top:-4px;right:-4px;
+    background:var(--text-dark);color:var(--white);
+    font-size:11px;min-width:22px;height:22px;
+    border-radius:50%;display:flex;align-items:center;justify-content:center;
+    padding:0 6px;font-weight:700;border:2px solid var(--cream);
+  }
+
+  /* ============ WA FLOAT ============ */
+  .wa-float{
+    position:fixed;bottom:28px;right:28px;z-index:200;
+    width:62px;height:62px;border-radius:50%;
+    background:var(--green);
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 12px 30px rgba(76,203,122,.4);
+    text-decoration:none;transition:.3s;
+  }
+  .wa-float:hover{transform:scale(1.1) rotate(6deg);box-shadow:0 16px 40px rgba(76,203,122,.55);}
+  .wa-float svg{width:32px;height:32px;fill:#fff;}
+
+  /* ============ RESPONSIVE ============ */
+  @media(max-width:980px){
+    .hero{
+      grid-template-columns:1fr;
+      gap:20px;
+      padding:36px 22px 70px;
+    }
+    /* Sembunyikan gambar versi desktop */
+    .hero-visual-desktop{display:none;}
+    /* Tampilkan gambar versi mobile, di antara deskripsi & harga */
+    .hero-visual-mobile{
+      display:block;
+      max-width:420px;
+      margin:26px auto 30px;
+      width:100%;
+    }
+
+    .hero-text{text-align:center;}
+    .hero-text h1{font-size:36px;}
+    .hero-text p.sub{margin-left:auto;margin-right:auto;}
+    .hero-cta{justify-content:center;}
+    .price-row{justify-content:center;}
+    .price{font-size:44px;}
+
+    .component-grid{grid-template-columns:1fr;gap:40px;}
+    .steps-grid{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr;gap:40px;}
+    .section-head h2{font-size:34px;}
+    section{padding:70px 24px;}
+    header{padding:12px 20px;}
+    .cart-float{display:flex;}
+  }
+  @media(max-width:600px){
+    .logo-text small{letter-spacing:1.5px;}
+    .logo-img{width:46px;height:46px;}
+    .logo-circle{width:46px;height:46px;font-size:22px;}
+    .hero-text h1{font-size:28px;}
+    .price{font-size:36px;}
+    .badge-1{left:-4px;font-size:12px;padding:8px 14px;top:14px;}
+    .badge-2{right:-4px;font-size:12px;padding:8px 14px;bottom:16px;}
+    .step-num{font-size:48px;}
+    .cta-btn{padding:13px 26px;font-size:14px;}
+    .drawer{width:280px;padding:70px 24px 30px;}
+    .cart-drawer{width:100vw;}
+    .cart-head,.cart-body,.cart-foot{padding-left:22px;padding-right:22px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header>
+  <div class="logo-wrap">
+    <img src="https://i.ibb.co.com/4n0fHSwf/logo.png"
+         alt="Wayan's Burger Logo"
+         class="logo-img"
+         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+    <div class="logo-circle" style="display:none;">W</div>
+    <div class="logo-text">
+      <b>Wayan's Burger</b>
+      <small>Since 2026</small>
+    </div>
+  </div>
+
+  <div class="header-actions">
+    <button class="cart-header-btn" onclick="openCart()" aria-label="Keranjang">
+      🛒
+      <span class="cart-badge" id="cartBadge">0</span>
+    </button>
+    <button class="menu-btn" onclick="toggleMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- ============ DRAWER MENU ============ -->
+<div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+<aside class="drawer" id="drawer">
+  <button class="drawer-close" onclick="toggleMenu()">✕</button>
+  <h3>Menu</h3>
+  <p class="drawer-sub">Jelajahi Wayan's Burger</p>
+  <ul>
+    <li><a href="#hero" onclick="toggleMenu()">🏠 Home</a></li>
+    <li><a href="#komponen" onclick="toggleMenu()">🍔 Menu Burger</a></li>
+    <li><a href="#order" onclick="toggleMenu()">🛒 Cara Order</a></li>
+    <li><a href="#kontak" onclick="toggleMenu()">📍 Lokasi</a></li>
+    <li><a href="https://wa.me/6281234567890" target="_blank">💬 WhatsApp Admin</a></li>
+    <li><a href="https://instagram.com/" target="_blank">📷 Instagram</a></li>
+    <li><a href="https://tiktok.com/" target="_blank">🎵 TikTok</a></li>
+  </ul>
+</aside>
+
+<!-- ============ CART DRAWER ============ -->
+<div class="overlay cart" id="cartOverlay" onclick="closeCart()"></div>
+<aside class="cart-drawer" id="cartDrawer">
+  <div class="cart-head">
+    <div>
+      <h3>🛒 Keranjang Belanja</h3>
+      <p id="cartCountText">0 item dipilih</p>
+    </div>
+    <button class="cart-close" onclick="closeCart()">✕</button>
+  </div>
+  <div class="cart-body" id="cartBody"></div>
+  <div class="cart-foot" id="cartFoot" style="display:none;">
+    <div class="total-row">
+      <span>Subtotal</span>
+      <span id="subtotal">Rp 0</span>
+    </div>
+    <div class="total-row final">
+      <span>Total</span>
+      <span id="grandTotal">Rp 0</span>
+    </div>
+    <button class="checkout-btn" id="checkoutBtn" onclick="openCheckoutForm()">
+      <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 018.413 3.488 11.82 11.82 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.978-1.607zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+      Lanjut Isi Data Pembeli
+    </button>
+  </div>
+</aside>
+
+<!-- ============ CART FLOAT (Mobile) ============ -->
+<button class="cart-float" onclick="openCart()" aria-label="Keranjang">
+  🛒
+  <span class="cart-badge" id="cartBadgeFloat">0</span>
+</button>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="hero">
+
+  <!-- KIRI (desktop): Teks + gambar mobile di tengah -->
+  <div class="hero-text">
+    <span class="tagline">🔥 Original Burger — Est. 2026</span>
+    <h1>Full Daging, Full Keju.<br><span class="highlight">Tanpa Sayur, Tanpa Basa-Basi!</span></h1>
+
+    <!-- FOTO BURGER untuk MOBILE — muncul di antara headline & deskripsi -->
+    <div class="hero-visual-mobile">
+      <div class="glow"></div>
+      <img class="burger-img"
+           src="https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=900&q=80"
+           alt="Wayan's Burger — beef patty tebal dengan lelehan keju cheddar">
+      <div class="badge-float badge-1">100% Beef Asli 🥩</div>
+      <div class="badge-float badge-2">No Sayur!🥬</div>
+    </div>
+
+    <p class="sub">
+      Menghadirkan Original Burger khas Wayan's Burger. Kombinasi sempurna antara
+      roti wijen empuk, beef patty tebal yang juicy, serta lelehan keju cheddar melimpah.
+      <b style="color:var(--text-dark);">Pure meat, pure satisfaction!</b>
+    </p>
+
+    <div class="price-row">
+      <div class="price">
+        <small>Rp</small>25.000
+        <span class="strike">Rp 35.000</span>
+      </div>
+    </div>
+
+    <div class="hero-cta">
+      <button class="cta-btn" onclick="addToCart(event)">🛒 Tambah ke Keranjang</button>
+      <button class="add-cart-btn" onclick="openCart()">Lihat Keranjang</button>
+    </div>
+  </div>
+
+  <!-- KANAN (desktop): Foto burger -->
+  <div class="hero-visual-desktop">
+    <div class="glow"></div>
+    <img class="burger-img"
+         src="https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=900&q=80"
+         alt="Wayan's Burger">
+    <div class="badge-float badge-1">100% Beef Asli 🥩</div>
+    <div class="badge-float badge-2">No Sayur! 🚫🥬</div>
+  </div>
+
+</section>
+
+<!-- ============ KOMPONEN ============ -->
+<section class="components" id="komponen">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Kenapa Begitu Lezat?</span>
+      <h2>3 Komponen <span class="highlight">Premium</span> Tanpa Kompromi</h2>
+      <p>Karena kami tidak pakai sayur, setiap bahan utama harus sempurna. Ini rahasianya.</p>
+    </div>
+
+    <div class="component-grid">
+      <div class="component-visual">
+        <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=900&q=80"
+             alt="Detail burger Wayan's — bun wijen, keju meleleh, beef patty">
+      </div>
+
+      <div class="comp-list">
+        <div class="comp-item">
+          <div class="comp-icon">🍔</div>
+          <div>
+            <h3>Bun Wijen Premium</h3>
+            <p>Roti lembut bertabur wijen, dipanggang dengan mentega hingga gurih dan wangi sempurna.</p>
+          </div>
+        </div>
+        <div class="comp-item">
+          <div class="comp-icon">🧀</div>
+          <div>
+            <h3>Double Melted Cheddar</h3>
+            <p>Keju cheddar pilihan yang meleleh sempurna, menyelimuti seluruh bagian daging.</p>
+          </div>
+        </div>
+        <div class="comp-item">
+          <div class="comp-icon">🥩</div>
+          <div>
+            <h3>100% Original Beef Patty</h3>
+            <p>Daging sapi asli pilihan yang tebal, dipanggang fresh, kaya bumbu, dan sangat juicy.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CARA ORDER ============ -->
+<section id="order">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Cara Order</span>
+      <h2>Cuma <span class="highlight">3 Langkah</span> Burger Siap Diantar</h2>
+      <p>Tanpa ribet, tanpa antre. Langsung dari panggangan ke tanganmu.</p>
+    </div>
+
+    <div class="steps-grid">
+      <div class="step-card">
+        <span class="step-num">01</span>
+        <h3>Tambah ke Keranjang</h3>
+        <p>Klik <b>"Tambah ke Keranjang"</b> pada produk, lalu atur jumlah order sesuai selera.</p>
+      </div>
+      <div class="step-card">
+        <span class="step-num">02</span>
+        <h3>Isi Data & Kirim</h3>
+        <p>Isi nama, no. telepon, alamat, dan catatan. Klik <b>"Kirim ke WhatsApp"</b>.</p>
+      </div>
+      <div class="step-card">
+        <span class="step-num">03</span>
+        <h3>Burger Siap Diantar</h3>
+        <p>Pesanan langsung masuk ke WA admin. Burger diantar <b>hangat & fresh</b>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer id="kontak">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo-wrap">
+        <img src="https://i.ibb.co.com/4n0fHSwf/logo.png"
+             alt="Wayan's Burger Logo"
+             class="logo-img"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="logo-circle" style="display:none;">W</div>
+        <div class="logo-text">
+          <b>Wayan's Burger</b>
+          <small>Since 2026</small>
+        </div>
+      </div>
+      <p>Full daging, full keju, tanpa sayur, tanpa basa-basi. Original burger khas Wayan's — dibuat fresh setiap hari.</p>
+      <div class="socials">
+        <a href="https://instagram.com/" target="_blank" title="Instagram">📷</a>
+        <a href="https://tiktok.com/" target="_blank" title="TikTok">🎵</a>
+        <a href="https://wa.me/6281234567890" target="_blank" title="WhatsApp">💬</a>
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <h4>Jam Operasional</h4>
+      <ul>
+        <li>🕐 <span><b>Senin – Jumat</b><br>10.00 – 22.00 WIB</span></li>
+        <li>🕐 <span><b>Sabtu – Minggu</b><br>10.00 – 23.00 WIB</span></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Lokasi Outlet</h4>
+      <ul>
+        <li>📍 <span><b>Wayan's Burger</b><br>Jl. Raya Prapen, Surabaya</span></li>
+        <li>📞 <span><b>+62 823-3246-6808</b></span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span>© 2026 Wayan's Burger. All rights reserved.</span>
+    <span>Made with 🤍 untuk para pencinta daging</span>
+  </div>
+</footer>
+
+<!-- ============ WA FLOAT ============ -->
+<a class="wa-float"
+   href="https://wa.me/6281234567890?text=Halo%20Wayan's%20Burger%2C%20saya%20mau%20pesan%20Original%20Burger%20%F0%9F%8D%94"
+   target="_blank" title="Pesan via WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 018.413 3.488 11.82 11.82 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.978-1.607zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+</a>
+
+<script>
+  /* ============ KONFIGURASI ============ */
+  const WA_NUMBER = "6282332466808"; // ⚠️ GANTI dengan nomor WA admin (format: 62xxx, tanpa + dan 0)
+  const PRODUCT = {
+    id: "original-burger",
+    name: "Original Burger",
+    price: 25000,
+    img: "https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=200&q=80"
+  };
+
+  /* ============ STATE ============ */
+  let cart = [];
+  let customer = { name:"", phone:"", address:"", notes:"" };
+  let checkoutMode = false;
+
+  /* ============ DRAWER MENU ============ */
+  function toggleMenu(){
+    document.getElementById('drawer').classList.toggle('open');
+    document.getElementById('overlay').classList.toggle('show');
+  }
+
+  /* ============ CART DRAWER ============ */
+  function openCart(){
+    document.getElementById('cartDrawer').classList.add('open');
+    document.getElementById('cartOverlay').classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeCart(){
+    document.getElementById('cartDrawer').classList.remove('open');
+    document.getElementById('cartOverlay').classList.remove('show');
+    document.body.style.overflow = '';
+  }
+
+  /* ============ ADD TO CART ============ */
+  function addToCart(e){
+    const existing = cart.find(i => i.id === PRODUCT.id);
+    if(existing){
+      existing.qty += 1;
+    } else {
+      cart.push({ ...PRODUCT, qty: 1 });
+    }
+    renderCart();
+    openCart();
+
+    const btn = e ? e.target : null;
+    if(btn){
+      const orig = btn.textContent;
+      btn.textContent = '✅ Ditambahkan!';
+      btn.classList.add('added');
+      setTimeout(()=>{
+        btn.textContent = orig;
+        btn.classList.remove('added');
+      }, 1500);
+    }
+  }
+
+  /* ============ UPDATE QTY ============ */
+  function updateQty(id, delta){
+    const item = cart.find(i => i.id === id);
+    if(!item) return;
+    item.qty += delta;
+    if(item.qty <= 0){
+      cart = cart.filter(i => i.id !== id);
+    }
+    renderCart();
+  }
+
+  /* ============ FORMAT RUPIAH ============ */
+  function formatRp(n){
+    return "Rp " + n.toLocaleString('id-ID');
+  }
+
+  /* ============ RENDER CART ============ */
+  function renderCart(){
+    const body = document.getElementById('cartBody');
+    const foot = document.getElementById('cartFoot');
+    const totalQty = cart.reduce((sum,i)=> sum + i.qty, 0);
+
+    document.getElementById('cartBadge').textContent = totalQty;
+    document.getElementById('cartBadgeFloat').textContent = totalQty;
+    document.getElementById('cartCountText').textContent = totalQty + ' item dipilih';
+
+    if(cart.length === 0 && !checkoutMode){
+      body.innerHTML = `
+        <div class="cart-empty">
+          <div class="emoji">🛒</div>
+          <h4>Keranjang Masih Kosong</h4>
+          <p>Yuk, tambahkan Original Burger favoritmu dulu!</p>
+          <button class="cta-btn" onclick="closeCart()">🍔 Pesan Sekarang</button>
+        </div>`;
+      foot.style.display = 'none';
+      return;
+    }
+
+    if(checkoutMode){
+      body.innerHTML = `
+        <div class="form-group">
+          <label>👤 Nama Pembeli <span class="req">*</span></label>
+          <input type="text" id="custName" placeholder="Contoh: Budi Santoso"
+                 value="${customer.name}" oninput="customer.name=this.value">
+        </div>
+        <div class="form-group">
+          <label>📱 Nomor Telepon <span class="req">*</span></label>
+          <input type="tel" id="custPhone" placeholder="Contoh: 0812-3456-7890"
+                 value="${customer.phone}" oninput="customer.phone=this.value">
+        </div>
+        <div class="form-group">
+          <label>📍 Alamat Pengiriman <span class="req">*</span></label>
+          <textarea id="custAddress" placeholder="Nama jalan, no. rumah, patokan..."
+                    oninput="customer.address=this.value">${customer.address}</textarea>
+        </div>
+        <div class="form-group">
+          <label>📝 Catatan (opsional)</label>
+          <textarea id="custNotes" placeholder="Contoh: tanpa bawang, extra pedas, saus dipisah..."
+                    oninput="customer.notes=this.value">${customer.notes}</textarea>
+        </div>
+        <div class="form-divider"></div>
+        <div style="font-size:13px;font-weight:700;color:var(--text-dark);margin-bottom:6px;">🛍️ Ringkasan Pesanan</div>
+        ${cart.map(i=>`
+          <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--text-mid);padding:4px 0;">
+            <span>${i.name} × ${i.qty}</span>
+            <span>${formatRp(i.price * i.qty)}</span>
+          </div>
+        `).join('')}
+      `;
+      foot.style.display = 'block';
+      document.getElementById('checkoutBtn').innerHTML = `
+        <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 018.413 3.488 11.82 11.82 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.978-1.607zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+        Kirim Pesanan ke WhatsApp
+      `;
+      document.getElementById('checkoutBtn').onclick = sendToWhatsApp;
+      updateTotals();
+      return;
+    }
+
+    body.innerHTML = cart.map(item => `
+      <div class="cart-item">
+        <img class="cart-item-img" src="${item.img}" alt="${item.name}">
+        <div class="cart-item-info">
+          <h4>${item.name}</h4>
+          <div class="item-price">${formatRp(item.price)}</div>
+        </div>
+        <div class="qty-control">
+          <button class="qty-btn" onclick="updateQty('${item.id}', -1)">−</button>
+          <span class="qty-num">${item.qty}</span>
+          <button class="qty-btn" onclick="updateQty('${item.id}', 1)">+</button>
+        </div>
+      </div>
+    `).join('');
+
+    foot.style.display = 'block';
+    document.getElementById('checkoutBtn').innerHTML = `
+      <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 018.413 3.488 11.82 11.82 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.978-1.607zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+      Lanjut Isi Data Pembeli
+    `;
+    document.getElementById('checkoutBtn').onclick = openCheckoutForm;
+    updateTotals();
+  }
+
+  function updateTotals(){
+    const subtotal = cart.reduce((s,i)=> s + i.price * i.qty, 0);
+    document.getElementById('subtotal').textContent = formatRp(subtotal);
+    document.getElementById('grandTotal').textContent = formatRp(subtotal);
+  }
+
+  function openCheckoutForm(){
+    if(cart.length === 0){
+      alert('Keranjang masih kosong. Tambahkan produk dulu ya! 🍔');
+      return;
+    }
+    checkoutMode = true;
+    renderCart();
+    document.getElementById('cartBody').scrollTop = 0;
+  }
+
+  function sendToWhatsApp(){
+    customer.name    = document.getElementById('custName')?.value.trim() || '';
+    customer.phone   = document.getElementById('custPhone')?.value.trim() || '';
+    customer.address = document.getElementById('custAddress')?.value.trim() || '';
+    customer.notes   = document.getElementById('custNotes')?.value.trim() || '';
+
+    if(!customer.name){
+      alert('Mohon isi nama pembeli ya 😊');
+      document.getElementById('custName').focus();
+      return;
+    }
+    if(!customer.phone){
+      alert('Mohon isi nomor telepon ya 📱');
+      document.getElementById('custPhone').focus();
+      return;
+    }
+    if(customer.phone.replace(/\D/g,'').length < 9){
+      alert('Nomor telepon sepertinya kurang lengkap. Cek lagi ya 📱');
+      document.getElementById('custPhone').focus();
+      return;
+    }
+    if(!customer.address){
+      alert('Mohon isi alamat pengiriman ya 📍');
+      document.getElementById('custAddress').focus();
+      return;
+    }
+
+    const subtotal = cart.reduce((s,i)=> s + i.price * i.qty, 0);
+    const orderId = 'WB-' + Date.now().toString().slice(-6);
+
+    let msg = `*🍔 PESANAN BARU — WAYAN'S BURGER*\n`;
+    msg += `_Order ID: ${orderId}_\n\n`;
+    msg += `*📋 Detail Pesanan:*\n`;
+    cart.forEach((item, idx) => {
+      msg += `${idx+1}. ${item.name}\n`;
+      msg += `   ${item.qty} × ${formatRp(item.price)} = *${formatRp(item.price * item.qty)}*\n`;
+    });
+    msg += `\n*💰 Total: ${formatRp(subtotal)}*\n\n`;
+    msg += `*👤 Data Pembeli:*\n`;
+    msg += `• Nama: ${customer.name}\n`;
+    msg += `• No. Telepon: ${customer.phone}\n`;
+    msg += `• Alamat: ${customer.address}\n`;
+    if(customer.notes){
+      msg += `• Catatan: ${customer.notes}\n`;
+    }
+    msg += `\nMohon konfirmasi pesanan saya ya. Terima kasih! 🙏`;
+
+    const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
+    window.open(url, '_blank');
+
+    setTimeout(()=>{
+      cart = [];
+      customer = { name:"", phone:"", address:"", notes:"" };
+      checkoutMode = false;
+      renderCart();
+      closeCart();
+    }, 800);
+  }
+
+  renderCart();
+</script>
+
+</body>
+  </html>
